@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using System.Text.Json;
 
 namespace MiniApi.Middleware
@@ -21,7 +21,9 @@ namespace MiniApi.Middleware
         public async Task InvokeAsync(HttpContext context)
         {
             // Si no es una operación de escritura, pasar directo
-            if (!AuditMethods.Contains(context.Request.Method))
+            // /api/users no se audita: el body tiene contraseñas en texto plano.
+            if (!AuditMethods.Contains(context.Request.Method) ||
+                context.Request.Path.StartsWithSegments("/api/users"))
             {
                 await _next(context);
                 return;
