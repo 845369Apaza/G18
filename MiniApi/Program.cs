@@ -1,41 +1,28 @@
-var builder = WebApplication.CreateBuilder(args);
+using MiniApi.Data;
+using MiniApi.Extensions;
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+public partial class Program
 {
-    app.MapOpenApi();
-}
+    private static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
 
-app.UseHttpsRedirection();
+        // 1. Logging
+        builder.AddAppLogging();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+        // 2. Servicios (Swagger, HealthChecks, Dapper, etc.)
+        builder.Services.AddAppServices();
+        var app = builder.Build();
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+        // 3. Inicializar DB
+        using (var scope = app.Services.CreateScope())
+            scope.ServiceProvider.GetRequiredService<DatabaseInitializer>().Initialize();
 
-app.Run();
+        // 4. Middleware (Swagger UI, Serilog, HealthChecks)
+        app.UseAppMiddleware();
 
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+        // 5. Endpoints
+        app.MapAppEndpoints();
+        app.Run();
+    }
 }
