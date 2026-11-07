@@ -1,22 +1,26 @@
 ﻿namespace MiniApi.Exceptions;
 
-/// <summary>Catálogo de errores de este servicio (sección 4.1 de la consigna).</summary>
+/// <summary>Catálogo de errores de Orders API (sección 4.3 de la consigna).</summary>
 public static class ErrorCodes
 {
-    public const string PRD_001 = "PRD-001";
-    public const string PRD_001_Msg = "Producto no encontrado.";
-    public const string PRD_002 = "PRD-002";
-    public const string PRD_002_Msg = "Los datos del producto son inválidos.";
-    public const string PRD_003 = "PRD-003";
-    public const string PRD_003_Msg = "Ya existe un producto con ese nombre en la categoría.";
-    public const string PRD_004 = "PRD-004";
-    public const string PRD_004_Msg = "El producto tiene órdenes activas y no puede eliminarse.";
-    public const string PRD_005 = "PRD-005";
-    public const string PRD_005_Msg = "Error interno al procesar el producto.";
+    public const string ORD_001 = "ORD-001";
+    public const string ORD_001_Msg = "Orden no encontrada.";
+    public const string ORD_002 = "ORD-002";
+    public const string ORD_002_Msg = "Los datos de la orden son inválidos.";
+    public const string ORD_003 = "ORD-003";
+    public const string ORD_003_Msg = "Usuario no encontrado al crear la orden.";
+    public const string ORD_004 = "ORD-004";
+    public const string ORD_004_Msg = "Producto no encontrado al crear la orden.";
+    public const string ORD_005 = "ORD-005";
+    public const string ORD_005_Msg = "Stock insuficiente para uno o más productos.";
+    public const string ORD_006 = "ORD-006";
+    public const string ORD_006_Msg = "El estado de la orden no puede ser modificado.";
+    public const string ORD_007 = "ORD-007";
+    public const string ORD_007_Msg = "Error interno al procesar la orden.";
 
     // Lo que los handlers genéricos necesitan saber de este servicio.
-    public const string InvalidData = PRD_002;
-    public const string InvalidDataMsg = PRD_002_Msg;
-    public const string Internal = PRD_005;
-    public const string InternalMsg = PRD_005_Msg;
+    public const string InvalidData = ORD_002;
+    public const string InvalidDataMsg = ORD_002_Msg;
+    public const string Internal = ORD_007;
+    public const string InternalMsg = ORD_007_Msg;
 }
