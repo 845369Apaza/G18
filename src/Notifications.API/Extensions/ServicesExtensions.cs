@@ -17,10 +17,10 @@ namespace MiniApi.Extensions
             services.AddSingleton<DatabaseInitializer>();
 
             // ALUMNOS: acá se registra el repositorio de cada servicio
-            services.AddScoped<ItemRepository>();
+            services.AddScoped<NotificationRepository>();
 
             // ALUMNOS: acá se registran los clientes HTTP hacia otros servicios
-
+            services.AddServiceClient<UsersClient>("Users");
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(options =>
             {
