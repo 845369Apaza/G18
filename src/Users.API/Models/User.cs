@@ -46,4 +46,3 @@ public record RegisterResponse(Guid Id, string Nombre, string Apellido, string E
 
 /// <summary>Respuesta del login y de la consulta por id.</summary>
 public record UserResponse(Guid Id, string Nombre, string Apellido, string Email);
-src/Users.API/Except
