@@ -24,14 +24,20 @@ namespace MiniApi.Data
 
             // ALUMNO: en caso de tener que agregar otra tabla es duplicar este comando
             connection.Execute("""
-            CREATE TABLE IF NOT EXISTS items (
-                id          INTEGER PRIMARY KEY AUTOINCREMENT,
-                name        TEXT    NOT NULL,
-                description TEXT,
-                price       REAL    NOT NULL DEFAULT 0,
-                stock       INTEGER NOT NULL DEFAULT 0,
-                created_at  TEXT    NOT NULL DEFAULT (datetime('now')),
-                updated_at  TEXT
+            CREATE TABLE IF NOT EXISTS orders (
+                id                  TEXT PRIMARY KEY,
+                usuario_id          TEXT NOT NULL,
+                total               REAL NOT NULL,
+                estado              TEXT NOT NULL,
+                fecha_creacion      TEXT NOT NULL,
+                fecha_actualizacion TEXT
+            );
+            CREATE TABLE IF NOT EXISTS order_items (
+                order_id        TEXT    NOT NULL,
+                producto_id     TEXT    NOT NULL,
+                cantidad        INTEGER NOT NULL,
+                precio_unitario REAL    NOT NULL,
+                PRIMARY KEY (order_id, producto_id)
             );
         """);
 
