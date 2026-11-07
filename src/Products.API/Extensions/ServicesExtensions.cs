@@ -2,7 +2,7 @@
 using Microsoft.OpenApi;
 using MiniApi.Data;
 using MiniApi.HealthChecks;
-using MiniApi.Middleware;
+using MiniApi.ExceptionHandlers;
 using MiniApi.Http;
 using MiniApi.Swagger;
 
