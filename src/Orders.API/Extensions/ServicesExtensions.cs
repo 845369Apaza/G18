@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Microsoft.OpenApi;
+using MiniApi.Clients;
 using MiniApi.Data;
 using MiniApi.HealthChecks;
 using MiniApi.ExceptionHandlers;
@@ -17,9 +18,11 @@ namespace MiniApi.Extensions
             services.AddSingleton<DatabaseInitializer>();
 
             // ALUMNOS: acá se registra el repositorio de cada servicio
-            services.AddScoped<ItemRepository>();
+            services.AddScoped<OrderRepository>();
 
             // ALUMNOS: acá se registran los clientes HTTP hacia otros servicios
+            services.AddServiceClient<UsersClient>("Users");
+            services.AddServiceClient<ProductsClient>("Products");
 
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(options =>
