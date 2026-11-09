@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Microsoft.OpenApi;
+using MiniApi.Clients;
 using MiniApi.Data;
 using MiniApi.HealthChecks;
 using MiniApi.ExceptionHandlers;
