@@ -6,9 +6,11 @@ namespace MiniApi.Models;
 public class Order
 {
     /// <summary>Identificador único.</summary>
+    /// <example>f1e2d3c4-0000-0000-0000-aabbccddeeff</example>
     public Guid Id { get; set; }
 
     /// <summary>Usuario que realizó la orden.</summary>
+    /// <example>a1b2c3d4-0000-0000-0000-111122223333</example>
     public Guid UsuarioId { get; set; }
 
     /// <summary>Productos incluidos.</summary>
@@ -23,6 +25,7 @@ public class Order
     public string Estado { get; set; } = string.Empty;
 
     /// <summary>Fecha de creación en UTC.</summary>
+    /// <example>2024-03-10T11:00:00Z</example>
     public DateTime FechaCreacion { get; set; }
 }
 
@@ -30,6 +33,7 @@ public class Order
 public class OrderItem
 {
     /// <summary>Referencia al producto.</summary>
+    /// <example>3fa85f64-5717-4562-b3fc-2c963f66afa6</example>
     public Guid ProductoId { get; set; }
 
     /// <summary>Unidades.</summary>
@@ -42,6 +46,8 @@ public class OrderItem
 }
 
 /// <summary>Datos para crear una orden.</summary>
+/// <param name="UsuarioId" example="a1b2c3d4-0000-0000-0000-111122223333">Usuario que compra. Tiene que existir en Users.</param>
+/// <param name="Items">Productos de la orden. Al menos uno.</param>
 public record CreateOrderRequest(
     [property: Required(ErrorMessage = "El usuarioId es requerido")]
     Guid? UsuarioId,
@@ -52,6 +58,8 @@ public record CreateOrderRequest(
 );
 
 /// <summary>Producto a incluir en la orden.</summary>
+/// <param name="ProductoId" example="3fa85f64-5717-4562-b3fc-2c963f66afa6">Producto. Tiene que existir en Products.</param>
+/// <param name="Cantidad" example="2">Unidades. Mayor a 0.</param>
 public record CreateOrderItemRequest(
     [property: Required(ErrorMessage = "El productoId es requerido")]
     Guid? ProductoId,
@@ -62,6 +70,7 @@ public record CreateOrderItemRequest(
 );
 
 /// <summary>Nuevo estado de la orden.</summary>
+/// <param name="Estado" example="Confirmada">Pendiente, Confirmada, Enviada, Entregada o Cancelada.</param>
 public record UpdateOrderStatusRequest(
     [property: Required(ErrorMessage = "El estado es requerido")]
     [property: RegularExpression("^(Pendiente|Confirmada|Enviada|Entregada|Cancelada)$",
@@ -70,4 +79,7 @@ public record UpdateOrderStatusRequest(
 );
 
 /// <summary>Respuesta al actualizar el estado.</summary>
+/// <param name="Id" example="f1e2d3c4-0000-0000-0000-aabbccddeeff">Identificador de la orden.</param>
+/// <param name="Estado" example="Confirmada">Estado nuevo.</param>
+/// <param name="FechaActualizacion" example="2024-03-10T12:00:00Z">Fecha del cambio en UTC.</param>
 public record OrderStatusResponse(Guid Id, string Estado, DateTime FechaActualizacion);
